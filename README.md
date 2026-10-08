@@ -1,30 +1,68 @@
-# AssetPilot — Gestão de Ativos de TI
+# AssetPilot
 
-Aplicação web **local** para gerenciar inventário de TI. Projeto de portfólio complementar ao [DeskFlow](https://github.com/Santoszoi/deskflow-help-desk).
+**Gestão de ativos e inventário de TI**
 
-## Como executar
+Sistema web local para controle de equipamentos, patrimônio, responsáveis, localização e histórico de alterações. Interface em português, com painel de indicadores e exportação de dados.
 
-Requer **Node.js 20 ou superior**. Não precisa instalar pacotes adicionais.
+## Início rápido no Windows
 
-1. Baixe ou clone este repositório.
-2. No terminal, defina uma senha segura com pelo menos 12 caracteres:
-   - Windows PowerShell: `$env:ADMIN_PASSWORD='escolha-uma-senha-forte'`
-   - Linux/macOS: `export ADMIN_PASSWORD='escolha-uma-senha-forte'`
-3. Execute `npm start`.
-4. Abra **http://127.0.0.1:3334**.
+**Requisito:** Node.js 20 ou superior instalado.
 
-O administrador é **Marcos**. A senha é definida localmente e não é armazenada no GitHub.
+1. Baixe o repositório em **Code → Download ZIP** e extraia a pasta.
+2. Dê dois cliques em **`INICIAR-ASSETPILOT.cmd`**.
+3. Digite uma senha de administrador com **no mínimo 12 caracteres**. A senha não aparece na tela.
+4. Aguarde a mensagem `AssetPilot: http://127.0.0.1:3334`.
+5. Acesse **http://127.0.0.1:3334** e entre com a mesma senha.
+
+**Não feche a janela do servidor durante o uso.** Para encerrar, pressione Ctrl+C. A senha é solicitada a cada inicialização e não é salva em arquivo.
+
+### Inicialização pelo terminal
+
+No PowerShell, dentro da pasta do projeto:
+
+```powershell
+.\iniciar-assetpilot.ps1
+```
+
+Se a política de execução impedir a execução do script, utilize o arquivo `INICIAR-ASSETPILOT.cmd` no lugar dele.
+
+No Linux/macOS:
+
+```bash
+export ADMIN_PASSWORD='defina-uma-senha-forte-com-12-ou-mais-caracteres'
+npm start
+```
 
 ## Funcionalidades
 
-- Painel com indicadores de ativos.
-- Cadastro, edição e exclusão de equipamentos.
-- Patrimônio único, categorias, status, localização e responsável.
-- Busca, histórico de operações e exportação CSV.
-- Dados persistidos localmente em `data/assets.json`.
+- Dashboard com indicadores por situação do equipamento.
+- Cadastro, consulta, edição e exclusão de ativos.
+- Controle de patrimônio único, categoria, número de série, responsável e localização.
+- Pesquisa por equipamento, patrimônio, categoria ou responsável.
+- Registro de atividades de cadastro, atualização e exclusão.
+- Exportação do inventário em CSV.
+- Autenticação de administrador local (**Marcos**) e bloqueio temporário após tentativas de login incorretas.
+- Persistência em arquivo JSON, sem necessidade de instalar banco de dados.
 
-## Segurança e limitações
+## Armazenamento e backup
 
-**Não publique esta aplicação diretamente na internet.** O servidor escuta somente `127.0.0.1`, e foi concebido para uso individual e local. Não possui gerenciamento de múltiplos usuários, perfis de permissão, banco SQL ou backup automático. Faça cópias de segurança de `data/assets.json`.
+Os dados ficam em `data/assets.json`, criado automaticamente quando necessário. **Faça backup desse arquivo** antes de substituir a pasta do projeto ou formatar o computador. Não envie esse arquivo com dados reais para um repositório público.
 
-Esta é a **versão local independente** do AssetPilot, não uma exportação do protótipo Lovable. O DeskFlow permanece em seu repositório próprio.
+## Testes
+
+```bash
+npm test
+```
+
+## Arquitetura
+
+- **Frontend:** HTML, CSS e JavaScript nativos, responsivos.
+- **Backend:** Node.js 20+, API HTTP local.
+- **Persistência:** JSON local com gravação por arquivo temporário.
+- **Dependências externas:** nenhuma.
+
+## Escopo e segurança
+
+O servidor escuta somente em `127.0.0.1`. É uma aplicação de uso individual e **não deve ser exposta diretamente à internet**. Ainda não possui contas multiusuário, permissões por perfil, sincronização entre computadores, backup automático ou banco SQL. O histórico é operacional e não constitui trilha de auditoria inviolável.
+
+Projeto complementar ao [DeskFlow](https://github.com/Santoszoi/deskflow-help-desk), voltado ao gerenciamento de chamados de suporte.
